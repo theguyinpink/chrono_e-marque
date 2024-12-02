@@ -3,17 +3,17 @@ const fs = require("fs");
 const path = require("path");
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000; // Render définit automatiquement le PORT
 
 // Middleware pour lire les données JSON dans les requêtes POST
 app.use(express.json());
 
-// Servir les fichiers statiques (HTML, CSS, JS)
-app.use(express.static(path.join(__dirname)));
+// Servir les fichiers statiques depuis le dossier "public"
+app.use(express.static(path.join(__dirname, "public")));
 
 // Route pour la page d'accueil
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 // Route pour récupérer les matchs
@@ -70,17 +70,6 @@ app.post("/update-match", (req, res) => {
       }
       res.json(match); // Retourner le match mis à jour
     });
-  });
-});
-
-// Route pour vérifier les fichiers dans le répertoire
-app.get("/files", (req, res) => {
-  fs.readdir(__dirname, (err, files) => {
-    if (err) {
-      res.status(500).send("Erreur lors de la lecture du répertoire.");
-      return;
-    }
-    res.json(files);
   });
 });
 
