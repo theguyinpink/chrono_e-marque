@@ -22,12 +22,16 @@ document.addEventListener("DOMContentLoaded", () => {
         <p><strong>Heure:</strong> ${match.time}</p>
         <p><strong>Lieu:</strong> ${match.location}</p>
         <div class="status">
-          <p>Marque: ${match.scorekeeper?.name || "Disponible"}</p>
+          <p>e-Marque: ${match.scorekeeper?.name || "Disponible"}</p>
           <p>Chronomètre: ${match.timer?.name || "Disponible"}</p>
+          <p>Arbitre 1: ${match.referee1?.name || "Disponible"}</p>
+          <p>Arbitre 2: ${match.referee2?.name || "Disponible"}</p>
         </div>
         <div class="buttons">
           ${renderButton(match.scorekeeper, "scorekeeper", index)}
           ${renderButton(match.timer, "timer", index)}
+          ${renderButton(match.referee1, "referee1", index)}
+          ${renderButton(match.referee2, "referee2", index)}
         </div>
       `;
   
@@ -37,19 +41,18 @@ document.addEventListener("DOMContentLoaded", () => {
     addEventListeners(matches);
   }
   
-
- function renderButton(role, type, index) {
-   if (role && role.token === userToken) {
-     // Si l'utilisateur actuel est déjà inscrit, afficher "Se désinscrire"
-     return `<button data-action="remove" data-type="${type}" data-index="${index}">Se désinscrire du ${type === "timer" ? "chronomètre" : "marque"}</button>`;
-   } else if (!role) {
-     // Si le rôle est disponible, afficher "S'inscrire"
-     return `<button data-action="add" data-type="${type}" data-index="${index}">S'inscrire au ${type === "timer" ? "chronomètre" : "marque"}</button>`;
-   } else {
-     // Si le rôle est pris par quelqu'un d'autre
-     return `<button disabled>${type === "timer" ? "Chrono" : "Marque"} déjà pris</button>`;
-   }
- }
+  function renderButton(role, type, index) {
+    if (role && role.token === userToken) {
+      // Si l'utilisateur actuel est déjà inscrit, afficher "Se désinscrire"
+      return `<button data-action="remove" data-type="${type}" data-index="${index}">Se désinscrire (${type === "referee1" || type === "referee2" ? "Arbitre 1" : type})</button>`;
+    } else if (!role) {
+      // Si le rôle est disponible, afficher "S'inscrire"
+      return `<button data-action="add" data-type="${type}" data-index="${index}">S'inscrire (${type === "referee1" || type === "referee2" ? "Arbitre 2" : type})</button>`;
+    } else {
+      // Si le rôle est pris par quelqu'un d'autre
+      return `<button disabled>${type === "referee1" || type === "referee2" ? "Arbitre" : type} déjà pris</button>`;
+    }
+  }
 
  function addEventListeners(matches) {
    document.querySelectorAll("button[data-action]").forEach(button => {

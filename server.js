@@ -61,7 +61,15 @@ app.post("/update-match", (req, res) => {
       return;
     }
     if (type === "scorekeeper" && match.scorekeeper && match.scorekeeper.token !== token) {
-      res.status(403).send("Marque déjà prise.");
+      res.status(403).send("e-Marque déjà prise.");
+      return;
+    }
+    if (type === "referee1" && match.referee1 && match.referee1.token !== token) {
+      res.status(403).send("Arbitre 1 déjà pris.");
+      return;
+    }
+    if (type === "referee2" && match.referee2 && match.referee2.token !== token) {
+      res.status(403).send("Arbitre 2 déjà pris.");
       return;
     }
 

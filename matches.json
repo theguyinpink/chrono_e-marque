@@ -7,7 +7,9 @@
     "home_team": "ES Brunoy U13-2",
     "away_team": "Ris Orangis",
     "scorekeeper": null,
-    "timer": null
+    "timer": null,
+    "referee1": null,
+    "referee2": null
   },
   {
     "date": "2024-12-01",
@@ -17,6 +19,8 @@
     "home_team": "ES Brunoy U15-1",
     "away_team": "Paray",
     "scorekeeper": null,
-    "timer": null
+    "timer": null,
+    "referee1": null,
+    "referee2": null
   }
 ]
