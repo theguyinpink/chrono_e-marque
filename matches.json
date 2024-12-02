@@ -10,12 +10,22 @@
     "timer": null
   },
   {
-    "date": "2024-12-01",
+    "date": "2024-11-30",
     "time": "16:00",
     "location": "Gymnase Lavenu",
     "category": "U15",
     "home_team": "ES Brunoy U15-1",
     "away_team": "Paray",
+    "scorekeeper": null,
+    "timer": null
+  },
+  {
+    "date": "2024-01-12",
+    "time": "13:30",
+    "location": "Gymnase Lavenu",
+    "category": "U11",
+    "home_team": "ES Brunoy U11-1",
+    "away_team": "Palaiseau",
     "scorekeeper": null,
     "timer": null
   }
