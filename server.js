@@ -39,56 +39,60 @@ app.get("/matches", (req, res) => {
 
 // Route pour mettre à jour un match
 app.post("/update-match", (req, res) => {
-  const { index, type, name, token } = req.body;
+ const { index, type, name, token } = req.body;
 
-  fs.readFile("matches.json", "utf8", (err, data) => {
-    if (err) {
-      res.status(500).send("Erreur lors de la lecture des matchs.");
-      return;
-    }
+ fs.readFile("matches.json", "utf8", (err, data) => {
+   if (err) {
+     res.status(500).send("Erreur lors de la lecture des matchs.");
+     return;
+   }
 
-    const matches = JSON.parse(data);
-    const match = matches[index];
+   const matches = JSON.parse(data);
+   const match = matches[index];
 
-    if (!match) {
-      res.status(404).send("Match non trouvé.");
-      return;
-    }
+   if (!match) {
+     res.status(404).send("Match non trouvé.");
+     return;
+   }
 
-    // Vérifier si le rôle est déjà pris par quelqu'un d'autre
-    if (type === "timer" && match.timer && match.timer.token !== token) {
-      res.status(403).send("Chronomètre déjà pris.");
-      return;
-    }
-    if (type === "scorekeeper" && match.scorekeeper && match.scorekeeper.token !== token) {
-      res.status(403).send("e-Marque déjà prise.");
-      return;
-    }
-    if (type === "referee1" && match.referee1 && match.referee1.token !== token) {
-      res.status(403).send("Arbitre 1 déjà pris.");
-      return;
-    }
-    if (type === "referee2" && match.referee2 && match.referee2.token !== token) {
-      res.status(403).send("Arbitre 2 déjà pris.");
-      return;
-    }
+   // Vérifier si le rôle est déjà pris par quelqu'un d'autre
+   if (type === "timer" && match.timer && match.timer.token !== token) {
+     res.status(403).send("Chronomètre déjà pris.");
+     return;
+   }
+   if (type === "scorekeeper" && match.scorekeeper && match.scorekeeper.token !== token) {
+     res.status(403).send("Marque déjà prise.");
+     return;
+   }
+   if (type === "referee1" && match.referee1 && match.referee1.token !== token) {
+     res.status(403).send("Arbitre 1 déjà pris.");
+     return;
+   }
+   if (type === "referee2" && match.referee2 && match.referee2.token !== token) {
+     res.status(403).send("Arbitre 2 déjà pris.");
+     return;
+   }
 
-    // Mettre à jour ou supprimer l'inscription
-    if (type === "timer") {
-      match.timer = match.timer ? null : { name, token };
-    } else if (type === "scorekeeper") {
-      match.scorekeeper = match.scorekeeper ? null : { name, token };
-    }
+   // Mettre à jour ou supprimer l'inscription
+   if (type === "timer") {
+     match.timer = match.timer ? null : { name, token };
+   } else if (type === "scorekeeper") {
+     match.scorekeeper = match.scorekeeper ? null : { name, token };
+   } else if (type === "referee1") {
+     match.referee1 = match.referee1 ? null : { name, token };
+   } else if (type === "referee2") {
+     match.referee2 = match.referee2 ? null : { name, token };
+   }
 
-    // Écrire les données mises à jour dans le fichier JSON
-    fs.writeFile("matches.json", JSON.stringify(matches, null, 2), (err) => {
-      if (err) {
-        res.status(500).send("Erreur lors de la sauvegarde des matchs.");
-        return;
-      }
-      res.json(match); // Retourner le match mis à jour
-    });
-  });
+   // Écrire les données mises à jour dans le fichier JSON
+   fs.writeFile("matches.json", JSON.stringify(matches, null, 2), (err) => {
+     if (err) {
+       res.status(500).send("Erreur lors de la sauvegarde des matchs.");
+       return;
+     }
+     res.json(match); // Retourner le match mis à jour
+   });
+ });
 });
 
 // Démarrer le serveur

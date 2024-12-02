@@ -44,15 +44,16 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderButton(role, type, index) {
     if (role && role.token === userToken) {
       // Si l'utilisateur actuel est déjà inscrit, afficher "Se désinscrire"
-      return `<button data-action="remove" data-type="${type}" data-index="${index}">Se désinscrire (${type === "referee1" || type === "referee2" ? "Arbitre 1" : type})</button>`;
+      return `<button data-action="remove" data-type="${type}" data-index="${index}">Se désinscrire (${type === "scorekeeper" ? "Marque" : type === "timer" ? "Chronomètre" : type === "referee1" ? "Arbitre 1" : type === "referee2" ? "Arbitre 2" : type})</button>`;
     } else if (!role) {
       // Si le rôle est disponible, afficher "S'inscrire"
-      return `<button data-action="add" data-type="${type}" data-index="${index}">S'inscrire (${type === "referee1" || type === "referee2" ? "Arbitre 2" : type})</button>`;
+      return `<button data-action="add" data-type="${type}" data-index="${index}">S'inscrire (${type === "scorekeeper" ? "Marque" : type === "timer" ? "Chronomètre" : type === "referee1" ? "Arbitre 1" : type === "referee2" ? "Arbitre 2" : type})</button>`;
     } else {
       // Si le rôle est pris par quelqu'un d'autre
-      return `<button disabled>${type === "referee1" || type === "referee2" ? "Arbitre" : type} déjà pris</button>`;
+      return `<button disabled>${type === "scorekeeper" ? "Marque" : type === "timer" ? "Chronomètre" : type === "referee1" ? "Arbitre 1" : type === "referee2" ? "Arbitre 2" : type} déjà pris</button>`;
     }
   }
+  
 
  function addEventListeners(matches) {
    document.querySelectorAll("button[data-action]").forEach(button => {
