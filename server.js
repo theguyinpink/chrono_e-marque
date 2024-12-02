@@ -16,6 +16,16 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
+// Route pour lister les fichiers dans le dossier "public" (TEMPORAIRE)
+app.get("/files", (req, res) => {
+  try {
+    const files = fs.readdirSync(path.join(__dirname, "public"));
+    res.json(files);
+  } catch (err) {
+    res.status(500).send("Erreur lors de la lecture des fichiers.");
+  }
+});
+
 // Route pour récupérer les matchs
 app.get("/matches", (req, res) => {
   fs.readFile("matches.json", "utf8", (err, data) => {
